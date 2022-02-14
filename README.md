@@ -1,2 +1,2 @@
 # burgerzilla_orkunincili
-The final project Yemekspeti Python Bootcampt
+The final project Yemekspeti Python Bootcamp
