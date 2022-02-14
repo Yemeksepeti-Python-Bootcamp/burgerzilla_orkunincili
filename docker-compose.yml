@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  customer:
+    container_name: burgerzilla_customer
+    image: bg_customer
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://user:123456@db:5432/burgerzilla_user_dev
+    depends_on:
+      - db
+
+  restaurant:
+    container_name: burgerzilla_restaurant
+    image: bg_restaurant
+    ports:
+      - "5001:5001"
+    environment:
+      - DATABASE_URL=postgresql://user:123456@db:5432/burgerzilla_restaurant_dev
+    depends_on:
+      - db
+
+  order:
+    container_name: burgerzilla_order
+    image: bg_order
+    ports:
+      - "5002:5002"
+    environment:
+      - DATABASE_URL=postgresql://user:123456@db:5432/burgerzilla_order_dev
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:14
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=burgerzilla
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
