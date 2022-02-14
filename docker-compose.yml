@@ -9,7 +9,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://user:123456@db:5432/burgerzilla_user_dev
     depends_on:
-      - db
+      - db_customer
 
   restaurant:
     container_name: burgerzilla_restaurant
@@ -19,7 +19,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://user:123456@db:5432/burgerzilla_restaurant_dev
     depends_on:
-      - db
+      - db_restaurant
 
   order:
     container_name: burgerzilla_order
@@ -29,18 +29,42 @@ services:
     environment:
       - DATABASE_URL=postgresql://user:123456@db:5432/burgerzilla_order_dev
     depends_on:
-      - db
-  db:
-    container_name: db
+      - db_order
+
+  db_customer:
+    container_name: db_customer
     image: postgres:14
     ports:
       - "5432"
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=burgerzilla
+      - POSTGRES_DB=burgerzilla_user_dev
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  db_restaurant:
+    container_name: db_restaurant
+    image: postgres:14
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=burgerzilla_restaurant_dev
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  db_order:
+    container_name: db_order
+    image: postgres:14
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=burgerzilla_order_dev
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 volumes:
   pgdata: {}
