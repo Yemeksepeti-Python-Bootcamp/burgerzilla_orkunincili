@@ -16,6 +16,5 @@ class OrderManager:
 
     order_create = api.model('Register Data',
     {
-        "user_id": fields.Integer(required=True),
         "product_id": fields.Integer(required=True)
     })
